@@ -11,4 +11,5 @@ if not exist "venv" (
 call venv\Scripts\activate
 echo Virtual environment activated.
 
-REM Install pip packages here from requirements.txt
+echo Installing requirements
+python -m pip install -r requirements.txt
