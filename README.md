@@ -2,6 +2,12 @@
 
 Script for automating consistent character creation using comfyui
 
+## Requirements
+
+* Python (3.11.9 is what I'm using)
+* ComfyUI
+  * comfyui-tooling-nodes
+
 ## Setup
 
 Run the setup.bat script, this should create the necessary venv and install the required pip packages
