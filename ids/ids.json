@@ -1,0 +1,10 @@
+{
+    "ids" : [
+        {
+            "name" : "Woman 1",
+            "image" : "woman1.jpg",
+            "sex" : "female",
+            "sdxlprompt" : "attractive female, blue eyes, brown hair, lips parted, shoulder length hair, messy hair, fair skin"
+        }
+    ]
+}

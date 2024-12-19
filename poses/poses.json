@@ -1,0 +1,9 @@
+{
+    "poses": [
+        {
+            "name": "Pose 1",
+            "image": "pose1.jpg",
+            "sdxlprompt": "wearing sporting attire, dark blue spandex top and bottoms, white trainers, no socks, looking to the side of the camera, plain white background"
+        }
+    ]
+}

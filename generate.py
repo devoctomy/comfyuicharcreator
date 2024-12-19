@@ -1,7 +1,8 @@
 import os
-import requests
+import json
 import base64
 import random
+import requests
 
 # Configurations
 IDS_FOLDER = 'ids'
@@ -13,7 +14,7 @@ def list_images(folder):
     return [os.path.join(folder, f) for f in os.listdir(folder) if f.lower().endswith(('png', 'jpg', 'jpeg'))]
 
 # Create the JSON payload for the queue call
-def create_payload(id_image_path, pose_image_path):
+def create_payload(prompt, id_image_path, pose_image_path):
     """
     Generate a payload object for the ComfyUI workflow API using base64 loaders.
 
@@ -82,7 +83,7 @@ def create_payload(id_image_path, pose_image_path):
             "class_type": "CLIPTextEncode",
             "inputs": {
                 "clip": ["4", 1],
-                "text": "professional photograph, attractive woman in sports attire"
+                "text": prompt
             }
         },
         "7": {  # CLIPTextEncode (negative conditioning)
@@ -179,11 +180,15 @@ def queue_prompt(payload):
 
 # Main function
 if __name__ == '__main__':
-    ids_images = list_images(IDS_FOLDER)
-    poses_images = list_images(POSES_FOLDER)
+    # Load ids.json
+    with open(os.path.join(IDS_FOLDER, 'ids.json'), 'r') as ids_file:
+        ids_data = json.load(ids_file)
 
-    for id_image in ids_images:
-        for pose_image in poses_images:
-            # Construct payload for the current pair of images
-            payload = create_payload(id_image, pose_image)
+    # Load poses.json
+    with open(os.path.join(POSES_FOLDER, 'poses.json'), 'r') as poses_file:
+        poses_data = json.load(poses_file)
+
+    for id_item in ids_data['ids']:
+        for pose_item in poses_data['poses']:
+            payload = create_payload(f"{id_item['sdxlprompt']}, {pose_item['sdxlprompt']}", f"./ids/{id_item['image']}", f"./poses/{pose_item['image']}")
             queue_prompt(payload)
